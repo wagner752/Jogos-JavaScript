@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jogo - Sneak</title>
+</head>
+<body>
+	<canvas id="palco" width="400" height="400"></canvas>
+	<script type="text/javascript">
+	//LOGICA BY: Programador BR
+		window.onload = function(){
+			var palco = document.getElementById('palco');
+			var contexto = palco.getContext("2d");
+			document.addEventListener("keydown", keyPush);
+			setInterval(game, 1000/15);
+
+			const velocidade = 1; //velocidade de avanço dos quadrados
+			var velocidadeX = velocidadeY = 0; 
+			var inicialX = 10; //Inicio da cabeça da cobra
+			var inicialY = 15; 
+			var dimensao = 20; //Espacamento entre quadrados
+			var quantidadeEspacos = 20; 
+			var pontoInicialX = pontoInicialY = 15; //Inicial da comida
+
+			var trilha = []; 
+			rastro = 5; 
+
+			
+
+
+			function game(){
+				inicialX = inicialX + velocidadeX;
+				inicialY = inicialY + velocidadeY;
+
+				if(inicialX < 0){
+					inicialX = quantidadeEspacos - 1;
+				}
+
+				if (inicialX > quantidadeEspacos - 1){
+					inicialX = 0;
+				}
+
+				if (inicialY < 0){
+					inicialY = quantidadeEspacos - 1;
+				}
+
+				if (inicialY > quantidadeEspacos - 1){
+					inicialY = 0;
+				}
+
+				contexto.fillStyle = "black";
+				contexto.fillRect(0,0, palco.width, palco.height);
+	
+				contexto.fillStyle = "red";
+				contexto.fillRect(pontoInicialX * dimensao, pontoInicialY * dimensao, dimensao,dimensao);
+
+				contexto.fillStyle = "blue"; // Cor da cobra
+				for (var i = 0; i < trilha.length; i++){
+					contexto.fillRect(trilha[i].x * dimensao, trilha[i].y * dimensao, dimensao - 1,dimensao - 1);
+
+					if(trilha[i].x == inicialX && trilha[i].y == inicialY){
+						velocidadeX = velocidadeY = 0;
+						rastro = 5; //Tamanho inicial da cobra
+					}
+				} // /for
+
+					//Aumenta tamanho da cobra
+					trilha.push({x:inicialX, y:inicialY})
+					while(trilha.length > rastro){
+						trilha.shift()
+					}
+					
+					//Mudar lugar do ponto
+					if (pontoInicialX == inicialX && pontoInicialY == inicialY){
+						rastro++;
+						pontoInicialX = Math.floor(Math.random()*quantidadeEspacos);
+						pontoInicialY = Math.floor(Math.random()*quantidadeEspacos);
+					}
+
+			} // /game()
+		
+			//Botão Pressionado
+			function keyPush(evento){
+				switch(evento.keyCode){
+					case 37: //esquerda
+						velocidadeX = -velocidade;
+						velocidadeY = 0;
+						break;
+
+					case 38: //Cima
+						velocidadeX = 0;
+						velocidadeY = -velocidade;
+						break;
+
+					case 39: //Direita
+						velocidadeX = velocidade;
+						velocidadeY = 0;
+						break;
+
+					case 40: //Baixo
+						velocidadeX = 0;
+						velocidadeY = velocidade;
+						break;
+						
+					default:
+						break;
+				} // /switch
+			} // /keypush
+
+	}// /function
+
+	</script>
+</body>
+</html>
