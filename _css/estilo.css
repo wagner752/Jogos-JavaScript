@@ -1,0 +1,28 @@
+#informacoes{
+	float: left;
+	border: 1px solid black;
+	height: 550px;
+}
+
+#cenario {
+	background-image: url(../_imagens/cenario.png);
+	background-repeat: no-repeat;
+	float: left;
+	width: 600px;
+	height: 550px;
+	border: 1px solid black;
+}
+
+table {
+	width: 140px; 
+	height: 132px;
+}
+
+td {
+	background: url('../_imagens/cronometro.png'); 
+	text-align:center
+}
+
+span {
+	color: red; font-size: 30px;
+}
